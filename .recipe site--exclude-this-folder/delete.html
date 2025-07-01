@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Recipe | {{ recipe.reciepe_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+/* Delete Recipe Section */
+.delete-recipe-section {
+    padding: 50px 20px;
+    background-color: #f7f7f7;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Delete Recipe Card */
+.delete-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Delete Header */
+.delete-header {
+    font-size: 2rem;
+    color: #f44336;
+    margin-bottom: 20px;
+}
+
+/* Recipe Info */
+.delete-recipe-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.recipe-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.recipe-details {
+    max-width: 500px;
+    text-align: left;
+}
+
+.recipe-details h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.recipe-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons .btn {
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons .btn-confirm {
+    background-color: #f44336;
+    color: white;
+}
+
+.action-buttons .btn-confirm:hover {
+    background-color: #d32f2f;
+}
+
+.action-buttons .btn-cancel {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.action-buttons .btn-cancel:hover {
+    background-color: #45a049;
+}
+
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/logout/" class="nav-link">Logout</a>
+    </nav>
+
+    <!-- Recipe Deletion Confirmation -->
+    <section class="delete-recipe-section">
+        <div class="container">
+            <div class="delete-card">
+                <h1 class="delete-header">Are You Sure You Want to Delete This Recipe?</h1>
+                <div class="delete-recipe-info">
+                    <div class="recipe-image">
+                        <img src="{{ recipe.reciepe_img.url }}" alt="{{ recipe.reciepe_name }}" class="img-fluid">
+                    </div>
+                    <div class="recipe-details">
+                        <h2>{{ recipe.reciepe_name|upper }}</h2>
+                        <p><strong>Created by:</strong> {{ recipe.user }}</p>
+                        <p><strong>Created on:</strong> {{ recipe.reciepe_created_at|date:"F j, Y" }}</p>
+                        <p><strong>Description:</strong> {{ recipe.reciepe_disc }}</p>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-confirm">Yes, Delete Recipe</button>
+                    </form>
+                    <a href="/recipe_details/{{ recipe.id }}" class="btn btn-cancel">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

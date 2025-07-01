@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Contact Us | Recipe Website{% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+    	/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    text-align: right;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-left: 15px;
+}
+
+.navbar .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Form Section */
+.form-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 70vh;
+}
+
+.form-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+.form-container h1 {
+    font-size: 1.8rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"],
+.form-container textarea,
+.form-container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.form-container input[type="text"]:focus,
+.form-container textarea:focus {
+    border-color: #4CAF50;
+}
+
+.form-container .btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.form-container .btn:hover {
+    background-color: #45a049;
+}
+
+/* Search Bar */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.search-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.search-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-btn:hover {
+    background-color: #45a049;
+}
+
+/* Table Section */
+.table-section {
+    margin-top: 50px;
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-section th,
+.table-section td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.table-section th {
+    background-color: #f2f2f2;
+}
+
+.table-section tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-section td img {
+    border-radius: 5px;
+}
+
+.table-section .btn-delete,
+.table-section .btn-update {
+    background-color: #f44336;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.table-section .btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+.table-section .btn-update {
+    background-color: #4CAF50;
+}
+
+.table-section .btn-update:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .table-section table {
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/logout/" class="nav-link">Logout</a>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="form-section">
+        <div class="container">
+            <h1 class="header-contact">Hello, {{ request.user.first_name|upper }}</h1>
+            
+            <!-- Contact Form -->
+            <form method="post" enctype="multipart/form-data" class="form-container">
+                {% csrf_token %}
+                <label for="reciepe_name">Recipe Name:</label>
+                <input type="text" name="reciepe_name" required>
+
+                <label for="reciepe_desc">Description:</label>
+                <textarea name="reciepe_desc" required></textarea>
+
+                <label for="reciepe_img">Choose Dish Image:</label>
+                <input type="file" name="reciepe_img">
+
+                <input type="submit" value="Add Recipe" class="btn">
+            </form>
+
+            <!-- Search Bar -->
+            <form class="search-form">
+                <input type="search" name="search" placeholder="Search Recipes..." class="search-input">
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Recipe Table -->
+    <section class="table-section">
+        <div class="container1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recipe Name</th>
+                        <th>Recipe Description</th>
+                        <th>Recipe Image</th>
+                        <th>Actions</th>
+                        <th>User</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reciepe in reciepes %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ reciepe.reciepe_name|upper }}</td>
+                            <td>{{ reciepe.reciepe_disc }}</td>
+                            <td><img src="{{ reciepe.reciepe_img.url }}" alt="Recipe Image" width="50" height="50"></td>
+                            <td>
+                                <a href="/delete_reciepe/{{ reciepe.id }}" class="btn-delete">Delete</a>
+                                <a href="/update_reciepe/{{ reciepe.id }}" class="btn-update">Update</a>
+                            </td>
+                            <td>{{ reciepe.user }}</td>
+                            <td>{{ reciepe.reciepe_created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

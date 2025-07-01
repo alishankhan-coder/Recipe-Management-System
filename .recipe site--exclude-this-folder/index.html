@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Recipe Website</title>
+    <link rel="stylesheet" href="{% static 'reciepe_app/css/style.css' %}">
+    
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Our Recipe Website</h1>
+    </header>
+
+    <main>
+        <!-- Search Section -->
+        <section class="search-section">
+            <form action="" method="GET" class="search-form">
+                <input type="search" name="search" placeholder="Search for recipes..." required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <!-- Table Section -->
+        <section class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recipe Name</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ recipe.recipe_name|upper }}</td>
+                        <td>{{ recipe.recipe_desc }}</td>
+                        <td>
+                            <img src="{{ recipe.recipe_img.url }}" alt="Recipe Image">
+                        </td>
+                        <td>
+                            <a href="{% url 'update_recipe' recipe.id %}" class="btn update-btn">Update</a>
+                            <a href="{% url 'delete_recipe' recipe.id %}" class="btn delete-btn">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Add Recipe Section -->
+        <section class="add-recipe">
+            <a href="{% url 'add_recipe' %}" class="btn add-recipe-btn">Add Recipes Now</a>
+        </section>
+    </main>
+</body>
+
+</html>

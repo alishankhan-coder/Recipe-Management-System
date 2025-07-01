@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Register | Recipe Website{% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <style>
+    	/* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            text-align: left;
+        }
+
+        .navbar .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #4CAF50;
+        }
+
+        .form-group .login-link {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .form-group .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .form-group .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Messages */
+        .messages-container {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        .message-tag {
+            position: relative;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Success Message */
+        .success {
+            background-color: #2ecc71;
+        }
+
+        /* Error Message */
+        .error {
+            background-color: #e74c3c;
+        }
+
+        /* Warning Message */
+        .warning {
+            background-color: #f1c40f;
+            color: #333;
+        }
+
+        /* Info Message */
+        .info {
+            background-color: #3498db;
+        }
+
+        .close {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .fa {
+            margin-right: 10px;
+        }
+
+        /* Close Button Hover Effect */
+        .close:hover {
+            color: #ddd;
+        }
+
+        /* Icon styling */
+        .icon {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px 20px;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .form-container {
+                padding: 10px 15px;
+            }
+
+            .form-container h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-link">Main</a>
+    </nav>
+
+    <section class="form-section">
+        <form method="post" enctype="multipart/form-data" class="form-container">
+            {% csrf_token %}
+            <h1>Register</h1>
+
+            <!-- Messages Section -->
+            {% for message in messages %}
+            <div class="message-tag {% if message.tags %}{{ message.tags }}{% endif %}">
+              <span class="icon">{% if message.tags == 'success' %}✔{% elif message.tags == 'error' %}✖{% elif message.tags == 'warning' %}⚠{% elif message.tags == 'info' %}ℹ{% endif %}</span>
+              {{ message.message }}
+              <button class="close" onclick="this.parentNode.remove()">×</button>
+            </div>
+            {% endfor %}
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Login Link -->
+            <div class="form-group">
+                <p>Already have an Account? <a href="/login/" class="login-link">Login</a></p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn">
+            </div>
+        </form>
+    </section>
+</body>
+</html>

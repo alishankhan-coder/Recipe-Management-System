@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Sign In | Recipe Haven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+    	/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.navbar .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Form Section */
+.form-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.form-container {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-container h1 {
+    font-size: 1.8rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #4CAF50;
+}
+
+.form-group .signup-link {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.form-group .signup-link:hover {
+    text-decoration: underline;
+}
+
+.form-group .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group .btn:hover {
+    background-color: #45a049;
+}
+
+/* Messages */
+ul.messages {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0;
+}
+
+ul.messages li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+ul.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+ul.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px 20px;
+    }
+
+    .form-container h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar .nav-link {
+        font-size: 0.9rem;
+    }
+
+    .form-container {
+        padding: 10px 15px;
+    }
+
+    .form-container h1 {
+        font-size: 1.2rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-link">Home</a>
+    </nav>
+
+    <section class="form-section">
+        <form method="post" enctype="multipart/form-data" class="form-container">
+            {% csrf_token %}
+            <h1>Login</h1>
+
+            <!-- Messages Section -->
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}" style="color: {% if message.tags == 'success' %} 'green' {% else %} 'red' {% endif %};">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="form-group">
+                <p>Don't have an <a href="/register/" class="signup-link">Account?</a></p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn">
+            </div>
+        </form>
+    </section>
+</body>
+</html>

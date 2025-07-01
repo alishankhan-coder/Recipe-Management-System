@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout | Recipe App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Reset and Global Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .navbar a {
+            color: white;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Logout Section */
+        .logout-section {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .logout-section:hover {
+            transform: translateY(-10px);
+        }
+        .logout-section h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .logout-section p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .logout-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .logout-buttons .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-logout {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-logout:hover {
+            background-color: #d32f2f;
+        }
+        .btn-cancel {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-cancel:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/login/">Login</a>
+    </nav>
+
+    <!-- Logout Section -->
+    <section class="logout-section">
+        <h1>Are you sure you want to log out?</h1>
+        <p>You are about to log out of your account. If you're sure, please click "Log Out".</p>
+        <div class="logout-buttons">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-logout">Log Out</button>
+            </form>
+            <a href="/" class="btn btn-cancel">Cancel</a>
+        </div>
+    </section>
+
+</body>
+</html>

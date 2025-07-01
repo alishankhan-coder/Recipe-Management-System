@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Update Recipe | Recipe Website{% endblock title %}</title>
+    {% load static %}
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% .css' %}"> {% endcomment %}
+    <style>
+    	/* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            text-align: left;
+        }
+
+        .navbar .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus,
+        .form-group input[type="file"]:focus {
+            border-color: #4CAF50;
+        }
+
+        .form-group textarea {
+            resize: none;
+        }
+
+        .form-group .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px 20px;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .form-container {
+                padding: 10px 15px;
+            }
+
+            .form-container h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation Section -->
+    <nav class="navbar">
+        <a href="{% url 'main' %}" class="nav-link">Home | Show Recipes</a>
+    </nav>
+
+    <!-- Update Recipe Section -->
+    <section class="form-section">
+        <form method="post" enctype="multipart/form-data" class="form-container">
+            {% csrf_token %}
+            <h1>Update Recipe</h1>
+
+            <!-- Recipe Name -->
+            <div class="form-group">
+                <label for="recipe_name">Recipe Name:</label>
+                <input type="text" id="recipe_name" name="recipe_name" value="{{ reciepe.recipe_name }}" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="recipe_desc">Description:</label>
+                <textarea id="recipe_desc" name="recipe_desc" rows="4" required>{{ reciepe.recipe_desc }}</textarea>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label for="recipe_img">Choose Image:</label>
+                <input type="file" id="recipe_img" value="{{recipe.recipe_img.url}}" name="recipe_img" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Update Recipe" class="btn">
+            </div>
+        </form>
+    </section>
+    
+</body>
+</html>

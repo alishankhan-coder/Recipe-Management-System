@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Recipe | {{ recipe.reciepe_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Reset and Global Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #388e3c;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Delete Section */
+        .delete-recipe-section {
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 0px 20px;
+            background-color: #f9f9f9;
+        }
+        .delete-card {
+            margin-top: -80px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            padding: 30px 40px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .delete-card:hover {
+            transform: translateY(-10px);
+        }
+        .delete-card h1 {
+            font-size: 24px;
+            color: #f44336;
+            margin-bottom: 20px;
+        }
+        .delete-card img {
+            {% comment %} max-width: 100%; {% endcomment %}
+            width:200px;
+            height:200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .delete-card .recipe-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .recipe-info p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .recipe-info p span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .action-buttons .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+            padding:15px 25px;
+            height: 50px;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+        .btn-cancel {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-cancel:hover {
+            background-color: #388e3c;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="{% url "main" %}">Home</a>
+        {% comment %} <a href="{% url "logoutView" %}">Logout</a> {% endcomment %}
+    </nav>
+
+    <!-- Delete Recipe Section -->
+    <section class="delete-recipe-section">
+        <div class="delete-card">
+            <h1>Confirm Recipe Deletion</h1>
+            
+            {% for recipe in recipes %}
+            
+            <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}">
+            <div class="recipe-info">
+                <p><span>Recipe Name:</span> {{ recipe.recipe_name|upper }}</p>
+                <p><span>Created By:</span> {{ recipe.user }}</p>
+                <p><span>Created On:</span> {{ recipe.recipe_created_at|date:"F j, Y" }}</p>
+                <p><span>Description:</span> {{ recipe.recipe_disc }}</p>
+            </div>
+            {% endfor %}
+            <div class="action-buttons">
+                <form method="post" action="{% url "delete_recipe" slg %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-delete">Yes, Delete</button>
+                </form>
+                <a href="{% url "main" %}" class="btn btn-cancel">Cancel</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

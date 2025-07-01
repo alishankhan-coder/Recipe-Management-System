@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ Recipe Haven - Discover Amazing Recipes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #10d876;
+            --warning-color: #feca57;
+            --error-color: #ff6b6b;
+            --dark-color: #2f3542;
+            --light-color: #f1f2f6;
+            --white: #ffffff;
+            --shadow: 0 15px 35px rgba(50, 50, 93, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            user-select: none;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .messages-container {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            z-index: 1000;
+            width: 300px;
+        }
+        .message-tag {
+            position: relative;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Success Message */
+        .success {
+            background-color: #2ecc71;
+        }
+
+        /* Error Message */
+        .error {
+            background-color: #e74c3c;
+        }
+
+        /* Warning Message */
+        .warning {
+            background-color: #f1c40f;
+            color: #333;
+        }
+
+        /* Info Message */
+        .info {
+            background-color: #3498db;
+        }
+
+        .close {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            color: #fff;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .fa {
+            margin-right: 10px;
+        }
+
+        /* Close Button Hover Effect */
+        .close:hover {
+            color: #ddd;
+        }
+
+        /* Icon styling */
+        .icon {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+
+        {% comment %} ul.messages {
+            list-style-type: none;
+            margin: 10px 0;
+            padding: 0;
+        }
+        
+        ul.messages li {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        ul.messages .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        ul.messages .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        } {% endcomment %}
+        
+        /* Search Section */
+        .search-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-form input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .search-form button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Table Section */
+        .table-section {
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+            border-right: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        table img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .btn-group{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            
+            
+        }
+        /* Buttons */
+        .btn {
+            
+            display:block;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right:5px;
+            margin-left:5px;
+
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .update-btn {
+            background-color: #007bff;
+        }
+
+        .update-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+        .add-recipe{
+            margin-bottom:15px;
+            padding:5px;
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .add-recipe-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .greetings{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        h1.hid{
+            display: none;
+            
+
+        }
+
+        /* Dropdown Styles */
+        .filter-container {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 10px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 200px;
+            display: None;
+        }
+
+        .select-selected {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .select-selected:after {
+            content: "\25BC"; /* down arrow */
+            position: absolute;
+            top: 18px;
+            right: 10px;
+            font-size: 0.6rem;
+            color: #ffcc00;
+        }
+
+        .select-items {
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .select-items div {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .select-items div:hover {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        /* Open dropdown */
+        .select-arrow-active:after {
+            content: "\25B2"; /* up arrow */
+        }
+
+        .select-show {
+            display: block;
+        }
+        .link-details{
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .link-details:hover{
+            text-decoration: underline;
+        }
+        .lnk-detail{
+            font-size: 1rem;
+            text-decoration: none;
+           
+            color: #4CAF50;
+            
+            
+            text-align: center;
+        }
+
+        .add-recipe-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .search-form input {
+                width: 100%;
+            }
+
+            table img {
+                width: 80px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .search-section {
+                padding: 0;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            table th,
+            table td {
+                padding: 8px;
+            }
+
+            table img {
+                width: 60px;
+            }
+
+            .btn {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            .add-recipe-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+
+    </style>
+    
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Our Recipe Website</h1>
+        {% comment %} <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}" style="color: {% if message.tags == 'success' %} green {% else %} red {% endif %};">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul> {% endcomment %}
+
+        {% for message in messages %}
+        
+            <div class="message-tag {% if message.tags %}{{ message.tags }}{% endif %}">
+            <span class="icon">{% if message.tags == 'success' %}✔{% elif message.tags == 'error' %}✖{% elif message.tags == 'warning' %}⚠{% elif message.tags == 'info' %}ℹ{% endif %}</span>
+            {{ message.message }}
+            <button class="close" onclick="this.parentNode.remove()">×</button>
+            </div>
+        
+    {% endfor %}
+    </header>
+
+    <!-- Add Recipe Section -->
+    <section class="add-recipe">
+        <div>
+
+            <a href="{% url 'addRecipe' %}" class="btn add-recipe-btn">Add Recipes Now</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logoutView' %}" class="btn add-recipe-btn">Logout</a>
+            {% else %}
+            <a href="{% url 'login_page' %}" class="btn add-recipe-btn">Login</a>
+            {% endif %}
+        </div>
+        <h1 class="{% if request.user.is_authenticated %}greetings {% else %}hid{% endif %}">Hey <i style="color: orange;">{{request.user.first_name| capfirst }}</i> , Welcome Back! </h1>
+        <!-- Dropdown Filter Section -->
+    <div class="filter-container">
+        <div class="custom-select">
+            <div class="select-selected">Latest Created</div>
+            <div class="select-items">
+                <div> All Recipes</div>
+                <div>Latest Created</div>
+                <div>First Created</div>
+                <div>Name: A-Z</div>
+                <div>Name: Z-A</div>
+                <div>Price: Low to High</div>
+                <div>Price: High to Low</div>
+            </div>
+        </div>
+    </div>
+    </section>
+    
+    <main>
+        <!-- Search Section -->
+        <section class="search-section">
+            {% comment %} <form action="." method="GET" class="search-form">
+                <input type="text" value="{{ query | default:""}}" name="search" placeholder="Search for recipes...">
+                <button type="submit">Search</button>
+            </form> {% endcomment %}
+
+            <form action="" method="GET" class="search-form">
+                <input 
+                    
+                    type="text" 
+                    id="search-input" 
+                    name="search" 
+                    placeholder="Search for recipes..." 
+                    autocomplete="off" 
+                    oninput="searchRecipes();"
+                    aria-label="Search for recipes">
+                <button type="submit" onsubmit="searchRecipes();">Search</button>
+            </form>
+        </section>
+        <!-- Table Section -->
+        <section class="table-section">
+            {% if recipes %}
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recipe Name</th>
+                        <th>Description</th>
+                        <th>Created By</th>
+                        <th>Date</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a class="link-details" href="{% url "details" recipe.slug %}">{{ recipe.recipe_name|upper }}</a></td>
+                        <td class="lnk-detail">{{ recipe.recipe_disc }}</td>
+                       
+                        <td class="lnk-detail">
+                            {{ recipe.user.first_name }}
+
+                            
+                        </td>
+                        <td class="lnk-detail">
+                            {{ recipe.recipe_created_at}}
+                            
+                        </td>
+                        <td>
+                            <img src="{{ recipe.recipe_img.url }}"  alt="{{recipe.recipe_name}}">
+                            
+                        </td>
+                        <td style ="padding:21px 12px; gap:10px;">
+                            {% if recipe.user == user %}
+                            <div class="btn-group">
+                            <a href="{% url 'update_recipe' recipe.slug %}" class="btn update-btn">Update</a>
+                            <a href="{% url 'delete' recipe.slug %}" class="btn delete-btn">Delete</a>
+                            </div>
+                            {% else %}
+                            <i style="color:#beb3b3;">No Actions Available </i>
+                            {% endif %}
+                    {% endfor %}
+                        </td>
+                {% else %}
+                        <td>
+                            <i style="color:red;font-weight:bold;font-size:1.2rem;">No Recipe Found.</i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </section>
+
+        
+    </main>
+    <script>
+                // Dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            var selected = document.querySelector('.select-selected');
+            var items = document.querySelector('.select-items');
+
+            selected.addEventListener('click', function() {
+                items.classList.toggle('select-show');
+                selected.classList.toggle('select-arrow-active');
+            });
+
+            var options = document.querySelectorAll('.select-items div');
+            options.forEach(function(option) {
+                option.addEventListener('click', function() {
+                    selected.innerText = this.innerText;
+                    items.classList.remove('select-show');
+                    selected.classList.remove('select-arrow-active');
+                });
+            });
+
+            // Close the dropdown when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!selected.contains(event.target)) {
+                    items.classList.remove('select-show');
+                    selected.classList.remove('select-arrow-active');
+                }
+            });
+        });
+        
+            // Dismiss messages after 5 seconds
+            setTimeout(function() {
+                var messages = document.querySelectorAll('.message-tag');
+                messages.forEach(function(message) {
+                    message.style.display = 'none';
+                });
+            }, 5000);
+
+    
+         
+        
+
+    </script>
+</body>
+
+</html>

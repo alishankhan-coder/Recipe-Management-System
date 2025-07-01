@@ -1,0 +1,6 @@
+<!-- current image dipslay -->
+ <label>Current Image:</label>
+ {% if recipe.recipe_img%}
+ <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name}}" style="display: block;margin-bottom: 10px;">
+ {% else%}
+ <p>No image Available</p>
