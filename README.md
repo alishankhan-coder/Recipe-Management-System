@@ -1,4 +1,4 @@
-# Recipe Management System 🍳
+<img width="1920" height="1080" alt="Screenshot (10)" src="https://github.com/user-attachments/assets/c0e1995f-968e-4e82-8849-9b394b83ce0f" /># Recipe Management System 🍳
 
 A comprehensive Django-based web application for managing recipes with full user authentication and CRUD operations.
 
@@ -185,7 +185,14 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Screenshots 📸
 
-*Add screenshots of your application here to showcase the UI*
+
+<img width="1920" height="1080" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/0e507895-1609-4159-ac3c-d56102b1eb37" />
+<img width="1920" height="1080" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/4940a86a-1d18-4fa5-9e25-a8a31cb490c2" />
+<img width="1920" height="1080" alt="Screenshot (11)" src="https://github.com/user-attachments/assets/9ab484e9-a44a-4cf9-83c5-763a72e7bafa" />
+<img width="1920" height="1080" alt="Screenshot (9)" src="https://github.com/user-attachments/assets/167d1add-a733-4da1-a69a-a0fab101231f" />
+<img width="1920" height="1080" alt="Screenshot (10)" src="https://github.com/user-attachments/assets/aab16c9c-1fcb-4246-bfb6-3aa8de1ebf66" />
+
+
 
 ## Future Enhancements 🚀
 
@@ -198,7 +205,4 @@ This project is open source and available under the [MIT License](LICENSE).
 - Recipe print functionality
 - Mobile app development
 
----
-
-**Happy Cooking! 👨‍🍳👩‍🍳**
 
